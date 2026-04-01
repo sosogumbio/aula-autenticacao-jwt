@@ -7,14 +7,18 @@ class PessoaRequests {
         this.endpointListarPessoas = '/api/pessoas';
     }
 
-    async listarPessoas() {
+async listarPessoas() {
+        const token = localStorage.getItem('token');
         try {
-            const response = await fetch(`${this.serverUrl}${this.endpointListarPessoas}`);
+            const response = await fetch(`${this.serverUrl}${this.endpointListarPessoas}`, {
+                headers: {
+                    'x-access-token': `${token}`
+                }
+            });
 
             if(!response.ok) {
                 throw new Error('Não foi possível listar as pessoas.');
             }
-
             return response.json();
         } catch (error) {
             console.error(`Erro ao fazer consulta à API: ${error}`);
